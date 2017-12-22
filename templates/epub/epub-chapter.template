@@ -1,0 +1,34 @@
+﻿# $title$ {.title}
+$if(subtitle)$
+## $subtitle$ {.subtitle}
+$endif$
+## $type$ {.type}
+
+$for(author)$
+<p class="author">$author.name$</p>
+<p class="affiliation">$author.affiliation$</p>
+$endfor$
+
+$if(abstract-fi)$
+### Tiivistelmä
+
+<p class="abstract-fi">$abstract-fi$</p>
+$endif$
+$if(keywords-fi)$
+<p class="keywords-fi">Avainsanat: $keywords-fi$</p>
+$endif$
+
+$if(abstract-en)$
+### Abstract
+
+<p class="abstract-en">$abstract-en$</p>
+$endif$
+$if(keywords-en)$
+<p class="keywords-en">Keywords: $keywords-fi$</p>
+$endif$
+
+
+$body$
+$for(include-after)$
+$include-after$
+$endfor$

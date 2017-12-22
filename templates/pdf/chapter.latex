@@ -1,0 +1,49 @@
+# $title$
+$if(subtitle)$
+
+## $subtitle$
+$endif$
+
+\begin{strip}
+    
+\centering
+
+$type$
+
+\vspace{0.5\baselineskip}
+
+$for(author)$
+
+\textbf{$author.name$}
+
+$author.affiliation$
+
+\vspace{0.5\baselineskip}
+
+$endfor$
+\end{strip}
+
+
+$if(abstract-fi)$
+\subsubsection{Tiivistelmä}
+$abstract-fi$
+$endif$
+$if(keywords-fi)$
+
+\emph{Avainsanat: $keywords-fi$}
+\vfill\break
+$endif$
+
+$if(abstract-en)$
+\subsubsection{Abstract}
+$abstract-en$
+$endif$
+$if(keywords-en)$
+
+\emph{Keywords: $keywords-en$}
+\clearpage
+$endif$
+
+$body$
+
+\FloatBarrier

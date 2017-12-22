@@ -1,0 +1,21 @@
+---
+title:
+- type: main
+  text: "Title"
+description:
+lang: finnish
+cover: source/img/cover.jpg
+cover-image: source/img/cover-ebook.png
+creator:
+- role: edt
+  text: First Editor
+- role: edt
+  text: Second Editor
+layout: Layout Person
+proofreader: Proof Reader
+date: 2017
+isbn-pdf: XXX-XXX-XX-XXXX-X (PDF)
+isbn-epub: XXX-XXX-XX-XXXX-X (EPUB)
+publisher: Publisher
+rights: © Whoever has the copyright.
+...

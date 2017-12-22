@@ -1,0 +1,64 @@
+$for(author-meta)$
+  <meta name="author" content="$author-meta$">
+$endfor$
+$if(charset)$
+  <meta charset="$charset$" />
+$else$
+  <meta charset="utf-8" />
+$endif$
+$if(date-meta)$
+  <meta name="dcterms.date" content="$date-meta$">
+$endif$
+$if(quotes)$
+  <style type="text/css">q { quotes: "“" "”" "‘" "’"; }</style>
+$endif$
+$if(highlighting-css)$
+  <style type="text/css">
+$highlighting-css$
+  </style>
+$endif$
+$for(css)$
+  <link rel="stylesheet" href="$css$">
+$endfor$
+$if(math)$
+  $math$
+$endif$
+$for(header-includes)$
+  $header-includes$
+$endfor$
+$for(include-before)$
+$include-before$
+$endfor$
+$if(title)$
+$type$: $title$
+$if(subtitle)$
+<h1 class="subtitle">$subtitle$</h1>
+$endif$
+$for(author)$
+<p class="author">$author.name$</p>
+<p class="affiliation">$author.affiliation$</p>
+$endfor$
+$if(abstract-fi)$
+<h3>Tiivistelmä</h3>
+<p class="abstract-fi">$abstract-fi$</p>
+$endif$
+$if(keywords-fi)$
+<p class="keywords-fi">Avainsanat: $keywords-fi$</p>
+$endif$
+$if(abstract-en)$
+<h3>Abstract</h3>
+<p class="abstract-en">$abstract-en$</p>
+$endif$
+$if(keywords-en)$
+<p class="keywords-en">Keywords: $keywords-en$</p>
+$endif$
+$endif$
+$if(toc)$
+<nav id="$idprefix$TOC">
+$toc$
+</nav>
+$endif$
+$body$
+$for(include-after)$
+$include-after$
+$endfor$

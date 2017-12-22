@@ -1,0 +1,319 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Basic document information
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[landscape,twocolumn,oneside,12pt]{memoir}
+\usepackage[paperwidth=1024pt, paperheight=768pt, top=3cm, bottom=2.5cm, left=3.6cm, right=3.6cm]{geometry}
+\usepackage{lmodern}
+\date{} % set to none
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Page styles
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Customise header and footer
+\makepagestyle{yearbook}
+\makeoddhead{yearbook}{}{\rightmark}{}
+\makeevenhead{yearbook}{}{}{}
+\makeheadrule{yearbook}{\textwidth}{1pt}
+\makefootrule{yearbook}{\textwidth}{1pt}{3pt}
+\makeevenfoot{yearbook}{Pelitutkimuksen vuosikirja $date$}{}{\thepage} 
+\makeoddfoot{yearbook}{Pelitutkimuksen vuosikirja $date$}{}{\thepage}
+
+% Default example from the memoir manual
+\makepsmarks{yearbook}{%
+\createmark{chapter}{left}{shownumber}{\@chapapp\ }{. \ }
+\createmark{chapter}{right}{nonumber}{}{. \ } % used in the header
+\createplainmark{toc}{both}{\contentsname}
+\createplainmark{lof}{both}{\listfigurename}
+\createplainmark{lot}{both}{\listtablename}
+\createplainmark{bib}{both}{\bibname}
+\createplainmark{index}{both}{\indexname}
+\createplainmark{glossary}{both}{\glossaryname}}
+
+\setlength{\columnsep}{1.5cm} % set column separation length
+
+% Paragraph formatting
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.5em}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+
+% Customize heading spacing
+% \titlespacing{command}{left spacing}{before spacing}{after spacing}[right]
+\usepackage{titlesec}
+\titlespacing\section{0em}{0.5em plus 0.1em minus 0.1em}{0em}
+\titlespacing\subsection{0em}{0.5em plus 0.1em minus 0.1em}{0em}
+\titlespacing\subsubsection{0em}{0.5em plus 0.1em minus 0.1em}{0em}
+
+% Customise chapter titles
+\titleformat
+{\chapter} % command
+[display] % shape
+{\Huge\scshape} % format
+{} % label
+{0.5ex} % sep = horisontal separation between title and label, must be defined
+{
+    \vspace{-5ex}
+    \centering
+} % before-code
+[
+\vspace{-0.5ex}%
+] % after-code
+
+% Customise section titles
+\titleformat*{\section}{\Large\bfseries} % format
+\makeatletter
+\renewcommand{\@seccntformat}[1]{}
+\makeatother
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Try to avoid widows and orphans:
+% set \clubpenalty, etc. to distinctive values for use
+% in tracing page breaks. These values are chosen so that
+% no single penalty will absolutely prohibit a page break, but
+% certain combinations of two or more will.
+\clubpenalty=9996
+\widowpenalty=9999
+\brokenpenalty=4991
+% Reiterate the default value of \redisplaypenalty, for
+% completeness.
+% Set postdisplaypenalty to a fairly high value to discourage a
+% page break between a display and a widow line at the end of a
+% paragraph.
+\predisplaypenalty=10000
+\postdisplaypenalty=1549
+% And then \displaywidowpenalty should be at least as high as
+% \postdisplaypenalty, otherwise in a situation where two displays
+% are separated by two lines, TeX will prefer to break between the
+% two lines, rather than before the first line.
+\displaywidowpenalty=1602
+
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pandoc-specific Latex packages, mostly for handling math
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+$if(euro)$
+  \usepackage{eurosym}
+$endif$
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+
+% cuted provides the strip-environment which is used in
+% the beginning of each chapter for author information
+\usepackage{cuted}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Figures
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Color customization -- requires the xcolor package
+\usepackage[usenames,dvipsnames]{xcolor}
+\definecolor{darkgray}{gray}{0.40}
+
+\usepackage{tikz} % for the cover page
+\definecolor[named]{color01}{rgb}{.2,.4,.6} % Color used in the title page
+
+% Settings from the adjustbox are export for images
+\usepackage[export]{adjustbox}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+% Make figures full width in two column layout
+\usepackage{float}
+\let\origfigure=\figure
+\let\endorigfigure=\endfigure
+\renewenvironment{figure}[1][]{%
+  \begin{figure*}
+}{%
+  \end{figure*}
+}
+
+% Make sure images are neither too small or too big
+\usepackage{letltxmacro}
+\LetLtxMacro{\OldIncludegraphics}{\includegraphics}
+\renewcommand{\includegraphics}[2][]{\OldIncludegraphics[min size={0.5\textwidth}{0.5\textheight}, max size={\textwidth}{0.95\textheight}, #1]{#2}}
+
+% Used to prevent floats from moving onto the next section
+\usepackage{placeins}
+
+% Remove caption numbering
+\usepackage[labelformat=empty]{caption}
+
+\usepackage{wallpaper} % Required for setting background images (title page)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Try to fix longtables in twocolumn mode
+\usepackage{longtable}
+\makeatletter
+\let\oldlt\longtable
+\let\endoldlt\endlongtable
+\def\longtable{\@ifnextchar[\longtable@i \longtable@ii}
+\def\longtable@i[#1]{\begin{figure}[t]
+\onecolumn
+\oldlt[#1]
+}
+\def\longtable@ii{\begin{figure}[t]
+\onecolumn
+\oldlt
+}
+\def\endlongtable{\endoldlt
+\twocolumn
+\end{figure}}
+\makeatother
+% Try to fix captions exceeding lines
+% This should possibly be within the previous snippet
+\setlength{\LTcapwidth}{\linewidth}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Links
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[hyphens]{url}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=false,
+            colorlinks=true,
+            citecolor=darkgray,
+            urlcolor=darkgray,
+            linkcolor=darkgray,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Language handling
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifxetex
+  \usepackage{polyglossia}
+  \setmainlanguage{finnish}
+  \setotherlanguages{english}
+\else
+  \usepackage[finnish]{babel}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Frontmatter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+\begin{document}
+
+$for(include-before)$
+$include-before$
+$endfor$
+    
+\frontmatter
+
+$if(cover)$
+% Write cover page
+\thispagestyle{empty} % Suppress page numbering
+\addtolength{\wpXoffset}{225pt}
+\addtolength{\wpYoffset}{-10pt}
+\ThisCenterWallPaper{1}{$cover$} % Add the background image, the first argument is the scaling - adjust this as necessary so the image fits the entire page
+\ % add something to the page, or the newpage doesn't work
+\newpage % Make sure the following content is on a new page
+$endif$
+
+% Publication information
+\thispagestyle{empty}
+
+$for(title)$
+$if(title.text)$
+  \chapter*{\Large\bfseries{$title.text$}}
+$else$
+  \section*{$title$}
+$endif$
+$endfor$
+$if(subtitle)$
+  section\{$subtitle$}
+$endif$
+
+\ % ensure there is something on the page
+
+\vfill
+
+% This is only names, so don't hyphenate these
+\mbox{Toimituskunta: {$for(creator)$$creator.text$$sep$, $endfor$}}
+
+\mbox{Tekninen toimitustyö ja taitto: $layout$}
+
+\mbox{Korjausluku: $proofreader$}
+
+\mbox{ISBN: $isbn-pdf$}
+
+\mbox{Julkaisija: $publisher$}
+
+$rights$
+
+% Style and create the table of contents
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{0}
+\tableofcontents*
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Mainmatter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mainmatter
+
+\pagestyle{yearbook}
+
+$body$
+
+$for(include-after)$
+$include-after$
+
+$endfor$
+\end{document}
